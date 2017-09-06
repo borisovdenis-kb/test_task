@@ -1,11 +1,10 @@
-import os
 from django.db import models
 
 # Create your models here.
 # TODO: Добавить валидацию для полей!!!
 
 
-class CreditOrganization(models.Model):
+class CreditOrganizations(models.Model):
     """
         Таблица создана для того, чтобы было на что ссылаться
         в поле credit_org таблицы Offers.
@@ -25,7 +24,7 @@ class Offers(models.Model):
     offer_type = models.CharField(max_length=30, blank=False)
     scoring_min = models.IntegerField(blank=False)
     scoring_max = models.IntegerField(blank=False)
-    credit_org = models.ForeignKey(CreditOrganization)
+    credit_org = models.ForeignKey(CreditOrganizations)
 
 
 class WorkSheets(models.Model):
@@ -48,7 +47,7 @@ class WorkSheets(models.Model):
         )
 
 
-class Claim(models.Model):
+class Claims(models.Model):
     """
         Таблица заявок в кредитную организацию.
     """

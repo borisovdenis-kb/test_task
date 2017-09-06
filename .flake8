@@ -1,6 +1,8 @@
 [flake8]
 
 ignore =
+    # line too long
+    E501
     # module level import not at top of file
     E402,
     # name may be undefined, or defined from star imports: module

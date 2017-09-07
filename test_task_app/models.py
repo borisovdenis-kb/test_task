@@ -26,6 +26,11 @@ class Offers(models.Model):
     scoring_max = models.IntegerField(blank=False)
     credit_org = models.ForeignKey(CreditOrganizations)
 
+    class Meta:
+        permissions = (
+            ("view_offers", "Can see one or several offers."),
+        )
+
 
 class WorkSheets(models.Model):
     """

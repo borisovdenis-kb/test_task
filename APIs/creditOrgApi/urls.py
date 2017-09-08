@@ -1,0 +1,8 @@
+from django.conf.urls import url
+from APIs.creditOrgApi import creditOrgApi
+
+
+urlpatterns = [
+    # url(r'^creditorg/claims$', creditOrgApi.claims_list),
+    url(r'^creditorg/claims/(?P<pk>\d+)/$', creditOrgApi.claims_detail),
+]

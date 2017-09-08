@@ -4,7 +4,28 @@ from django.db import models
 # TODO: Добавить валидацию для полей!!!
 
 
-class CreditOrganizations(models.Model):
+class UpdateMixin:
+    """
+        An mixin that allows you to add a method for any model. 
+        By inheritance.
+
+        class ModelName(models.Model, UpdateMixin):
+            ...
+        obj = ModelName.objects.get(...)
+        obj.update(**{field1: value1, ...})
+    """
+    def update(self, **kwargs):
+        if self._state.adding:
+            raise self.DoesNotExist
+
+        for field, value in kwargs.items():
+            setattr(self, field, value)
+
+        self.clean_fields()
+        self.save()
+
+
+class CreditOrganizations(models.Model, UpdateMixin):
     """
         Таблица создана для того, чтобы было на что ссылаться
         в поле credit_org таблицы Offers.
@@ -12,7 +33,7 @@ class CreditOrganizations(models.Model):
     org_name = models.CharField(max_length=256, blank=False)
 
 
-class Offers(models.Model):
+class Offers(models.Model, UpdateMixin):
     """
         Таблица предложений.
     """
@@ -32,7 +53,7 @@ class Offers(models.Model):
         )
 
 
-class WorkSheets(models.Model):
+class WorkSheets(models.Model, UpdateMixin):
     """
         Таблица анкет клиентов.
     """
@@ -48,22 +69,22 @@ class WorkSheets(models.Model):
 
     class Meta:
         permissions = (
-            ("view_worksheet", "Can see one or several worksheets."),
+            ("view_worksheets", "Can see one or several worksheets."),
         )
 
 
-class Claims(models.Model):
+class Claims(models.Model, UpdateMixin):
     """
         Таблица заявок в кредитную организацию.
     """
     created_date = models.DateTimeField(auto_now_add=True)
-    sent_date = models.DateTimeField()
+    sent_date = models.DateTimeField(blank=True)
     worksheet = models.ForeignKey(WorkSheets)
     offer = models.ForeignKey(Offers)
     status = models.CharField(max_length=10)
 
     class Meta:
         permissions = (
-            ("view_claim", "Can see one or several claims."),
-            ("send_claim", "Can send claim."),
+            ("view_claims", "Can see one or several claims."),
+            ("send_claims", "Can send claim."),
         )

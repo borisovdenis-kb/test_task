@@ -27,6 +27,9 @@ urlpatterns = [
     # API кредитной организации
     url(r'^', include('APIs.creditOrgApi.urls')),
 
+    # API партнеров
+    url(r'^', include('APIs.partnersApi.urls')),
+
     # API documentation
     url(r'^docs/', include('rest_framework_docs.urls')),
 ]

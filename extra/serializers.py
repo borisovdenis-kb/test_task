@@ -26,7 +26,7 @@ class WorksheetsSerializer(serializers.ModelSerializer):
         model = WorkSheets
         fields = (
             'id', 'created_date', 'changed_date', 'first_name', 'last_name',
-            'middle_name', 'birth_day', 'phone', 'passport_num', 'scoring'
+            'middle_name', 'birth_day', 'phone', 'passport_number', 'scoring'
         )
 
 

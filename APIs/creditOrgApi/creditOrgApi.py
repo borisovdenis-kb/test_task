@@ -6,12 +6,25 @@ from test_task_app.models import Claims, Offers
 from extra.serializers import ClaimsSerializer, OffersSerializer
 
 
+def claims_list(request):
+    if not request.user.is_authenticated():
+        return HttpResponse(status=401)
+
+    user = request.user
+
+    if request.method == 'POST':
+        if not user.has_perm('test_task_app.add_claims'):
+            return HttpResponse(status=403)
+
+        data = JSONParser().parse(request)
+        serializer = ClaimsSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+
 def claims_detail(request, pk):
-    """        
-    get:
-    This endpoint to read one claim instance. Available for superuser and creditorgs.
-    When creditorg call this endpoint claim.status
-    """
     if not request.user.is_authenticated():
         return HttpResponse(status=401)
 
@@ -57,17 +70,43 @@ def claims_detail(request, pk):
         return HttpResponse(status=405)
 
 
+def offers_list(request):
+    if not request.user.is_authenticated():
+        return HttpResponse(status=401)
+
+    user = request.user
+
+    if request.method == 'GET':
+        if not user.has_perm('test_task_app.view_offers'):
+            return HttpResponse(status=403)
+
+        offers = Offers.objects.all()
+        serializer = OffersSerializer(offers, many=True)
+
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        if not user.has_perm('test_task_app.add_offers'):
+            return HttpResponse(status=403)
+
+        data = JSONParser().parse(request)
+        serializer = OffersSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+    else:
+        return HttpResponse(status=405)
+
+
 def offers_detail(request, pk):
-    """        
-    get:
-    This endpoint to read one offer instance. Available for superuser and creditorgs.
-    """
     if not request.user.is_authenticated():
         return HttpResponse(status=401)
 
     try:
         offer = Offers.objects.get(id=pk)
-    except Claims.DoesNotExist:
+    except Offers.DoesNotExist:
         return HttpResponse(status=404)
 
     user = request.user

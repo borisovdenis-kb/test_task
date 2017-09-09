@@ -16,7 +16,7 @@ class OffersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offers
         fields = (
-            'created_date', 'changed_date', 'rotation_start_date', 'rotation_end_date',
+            'id', 'created_date', 'changed_date', 'rotation_start_date', 'rotation_end_date',
             'title', 'offer_type', 'scoring_min', 'scoring_max', 'credit_org'
         )
 
@@ -25,7 +25,7 @@ class WorksheetsSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkSheets
         fields = (
-            'created_date', 'changed_date', 'first_name', 'last_name',
+            'id', 'created_date', 'changed_date', 'first_name', 'last_name',
             'middle_name', 'birth_day', 'phone', 'passport_num', 'scoring'
         )
 
@@ -33,4 +33,4 @@ class WorksheetsSerializer(serializers.ModelSerializer):
 class CreditOrganisationsSerializer(serializers.ModelSerializer):
     class Meta:
         model = CreditOrganizations
-        fields = ('org_name', )
+        fields = ('id', 'org_name', )

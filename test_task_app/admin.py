@@ -12,6 +12,7 @@ class CreditOrganizationsAdmin(admin.ModelAdmin):
 
 class OffersAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "created_date",
         "changed_date",
         "rotation_start_date",
@@ -22,10 +23,24 @@ class OffersAdmin(admin.ModelAdmin):
         "scoring_max",
         "credit_org",
     )
+    list_filter = (
+        "id",
+        "created_date",
+        "changed_date",
+        "rotation_start_date",
+        "rotation_end_date",
+        "title",
+        "offer_type",
+        "scoring_min",
+        "scoring_max",
+        "credit_org",
+    )
+    date_hierarchy = "created_date"
 
 
 class WorkSheetsAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "created_date",
         "changed_date",
         "first_name",
@@ -36,16 +51,19 @@ class WorkSheetsAdmin(admin.ModelAdmin):
         "passport_number",
         "scoring",
     )
+    date_hierarchy = "created_date"
 
 
 class ClaimsAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "created_date",
         "sent_date",
         "worksheet",
         "offer",
         "status",
     )
+    date_hierarchy = "created_date"
 
 
 admin.site.register(CreditOrganizations, CreditOrganizationsAdmin)

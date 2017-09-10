@@ -1,8 +1,8 @@
-from datetime import datetime
+from django.utils import timezone
 from rest_framework.parsers import JSONParser
+from extra.serializers import WorksheetsSerializer
 from django.http import HttpResponse, JsonResponse
 from test_task_app.models import Claims, WorkSheets
-from extra.serializers import WorksheetsSerializer
 
 
 def send_claim(request, pk):
@@ -20,7 +20,7 @@ def send_claim(request, pk):
         if not user.has_perm('test_task_app.send_claims'):
             return HttpResponse(status=403)
 
-        claim.update(**{'status': 'SENT', "sent_date": datetime.now()})
+        claim.update(**{'status': 'SENT', "sent_date": timezone.now()})
         return HttpResponse(status=200)
 
     else:

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>Registration</title>
+{% endblock %}
+
+{% block content %}
+    <div class="reg_page text-center">
+        <form action="" method="post">
+            <div class="panel_reg">
+
+                <div class="row">
+                    <div class="">
+                        <h3>Registration</h3>
+                    </div>
+                </div>
+
+                <div class="row text-center">
+                    <input type="text" name='username'
+                           class="form-control input-lg"
+                           placeholder="Username"
+                           autocomplete="off"
+                           style="margin-top: 10px; margin-right: auto; margin-left: auto; width: 350px;">
+                </div>
+
+                <div class="row text-center">
+                    <input type="password" name='password1'
+                           class="form-control input-lg"
+                           placeholder="Password"
+                           style="margin-top: 10px; margin-right: auto; margin-left: auto; width: 350px">
+                </div>
+
+                <div class="row text-center">
+                    <input type="password" name='password2'
+                           class="form-control input-lg"
+                           placeholder="Confirm password"
+                           style="margin-top: 10px; margin-right: auto; margin-left: auto; width: 350px">
+                </div>
+
+                <div class="row text-center">
+                    <input type="text" name='groupname'
+                           class="form-control input-lg"
+                           placeholder="Role [superusers, partners, creditorg]"
+                           style="margin-top: 10px; margin-right: auto; margin-left: auto; width: 350px">
+                </div>
+
+                <div class="row text-center reg_btn_content">
+                    <input type="submit"
+                           id="buttonEnter"
+                           class="btn input-lg  btn-success"
+                           value="Create account"
+                           style="margin-top: 10px; width: 200px">
+                </div>
+
+                <div class="reg_footer row text-center">
+                    <a href="/login" id="buttonHelp" type="button"
+                       class="btn btn-sm btn-lg btn-link text-center">
+                        Already have an account? Log in
+                    </a>
+                </div>
+            </div>
+
+            {% for field, error in errors.items %}
+                <h3 class="text-center alert-danger btn-lg">{{ field }} : {{ error.0.message }}</h3>
+            {% endfor %}
+
+            {% if incorrect_gp_name %}
+                <h3 class="text-center alert-danger btn-lg">Incorrect role type.</h3>
+            {% endif %}
+        </form>
+
+    </div>
+{% endblock %}

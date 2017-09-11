@@ -1,33 +1,47 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import auth
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render_to_response
+from rest_framework.authentication import SessionAuthentication
+
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
 
 
 def registration(request):
+    context = {
+        "incorrect_gp_name": False,
+    }
     if request.method == 'POST':
         data = request.POST
         form = UserCreationForm(data)
 
         if form.is_valid():
-            # создаем и добавляем пользователя в нужную группу
             try:
                 group = Group.objects.get(name=data['groupname'])
             except ObjectDoesNotExist:
-                return HttpResponse(status=400)
+                context['incorrect_gp_name'] = True
+                return render_to_response("registration_page.html", context)
             else:
                 new_user = form.save()
                 group.user_set.add(new_user)
 
-            return HttpResponse(status=200)
+            return HttpResponseRedirect("/login")
         else:
-            return HttpResponse(status=400)
+            context['errors'] = form.errors.as_data()
+            return render_to_response("registration_page.html", context)
     else:
-        return HttpResponse(status=405)
+        return render_to_response('registration_page.html')
 
 
 def login(request):
+    context = {
+        "login_error": False
+    }
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -37,15 +51,27 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                return HttpResponse(status=200)
+                return HttpResponseRedirect("/")
             else:
                 return HttpResponse(status=403)
         else:
-            return HttpResponse(status=400)
+            context['login_error'] = True
+            return render_to_response('login_page.html', context)
     else:
-        return HttpResponse(status=405)
+        return render_to_response('login_page.html', context)
 
 
 def logout(request):
     auth.logout(request)
-    return HttpResponse(status=200)
+    return HttpResponseRedirect("/login")
+
+
+def home(request):
+    if request.user.is_authenticated():
+        context = {
+            "user": request.user,
+            "gp_name": request.user.groups.get().name
+        }
+        return render_to_response('home_page.html', context)
+    else:
+        return HttpResponseRedirect('/login')

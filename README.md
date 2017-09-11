@@ -19,22 +19,22 @@
 
 ### Таблица прав пользователей.
 
-| URL                          | CREDITORG | PARTNER    | SUPERUSER |
-|:-----------------------------|:---------:|:----------:|:---------:|
-| /creditorg/claims/           |    YES    |     NO     |    YES    |
-| /creditorg/claims/{id}/      |    YES    |     NO     |    YES    |
-| /creditorg/claims/           |    NO     |     YES    |    YES    |
-| /creditorg/claims/{id}/send/ |    NO     |     YES    |    YES    |
-| /creditorg/claims/{id}/      |    NO     |     NO     |    YES    |
-| /creditorg/claims/{id}/      |    NO     |     NO     |    YES    |
-| /creditorg/offers/           |    YES    |     NO     |    YES    |
-| /creditorg/offers/{id}/      |    YES    |     NO     |    YES    |
-| /creditorg/offers/           |    YES    |     NO     |    YES    |
-| /creditorg/offers/{id}/      |    YES    |     NO     |    YES    |
-| /creditorg/offers/{id}/      |    NO     |     NO     |    YES    |
-| /creditorg/worksheets/       |    NO     |     YES    |    YES    |
-| /creditorg/worksheets{id}/   |    NO     |     YES    |    YES    |
-| /creditorg/worksheets/       |    NO     |     YES    |    YES    |
-| /creditorg/worksheets/{id}/  |    NO     |     NO     |    YES    |
-| /creditorg/worksheets/{id}/  |    NO     |     NO     |    YES    |
+| URL                          | METHOD | CREDITORG | PARTNER    | SUPERUSER |
+|:-----------------------------|:------:|:---------:|:----------:|:---------:|
+| /creditorg/claims/           |GET     |    YES    |     NO     |    YES    |
+| /creditorg/claims/{id}/      |GET     |    YES    |     NO     |    YES    |
+| /creditorg/claims/           |POST    |    NO     |     YES    |    YES    |
+| /creditorg/claims/{id}/send/ |POST    |    NO     |     YES    |    YES    |
+| /creditorg/claims/{id}/      |PUT     |    NO     |     NO     |    YES    |
+| /creditorg/claims/{id}/      |DELETE  |    NO     |     NO     |    YES    |
+| /creditorg/offers/           |GET     |    YES    |     NO     |    YES    |
+| /creditorg/offers/{id}/      |GET     |    YES    |     NO     |    YES    |
+| /creditorg/offers/           |POST    |    YES    |     NO     |    YES    |
+| /creditorg/offers/{id}/      |PUT     |    YES    |     NO     |    YES    |
+| /creditorg/offers/{id}/      |DELETE  |    NO     |     NO     |    YES    |
+| /creditorg/worksheets/       |GET     |    NO     |     YES    |    YES    |
+| /creditorg/worksheets{id}/   |GET     |    NO     |     YES    |    YES    |
+| /creditorg/worksheets/       |POST    |    NO     |     YES    |    YES    |
+| /creditorg/worksheets/{id}/  |PUT     |    NO     |     NO     |    YES    |
+| /creditorg/worksheets/{id}/  |DELETE  |    NO     |     NO     |    YES    |
 

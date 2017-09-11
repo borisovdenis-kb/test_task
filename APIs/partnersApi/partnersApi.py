@@ -12,8 +12,9 @@ from test_task_app.views import CsrfExemptSessionAuthentication
 class SendClaim(APIView):
     """
     Send claim. After sending claim.status changes to SENT.
-    fields: popa
     """
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     def get_object(self, pk):
         try:
             return Claims.objects.get(id=pk)

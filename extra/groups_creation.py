@@ -33,17 +33,17 @@ class InitGroup:
 
 if __name__ == '__main__':
     superusers_perms_needed = [
-        'add_claims', 'change_claims', 'delete_claims', 'view_claim', 'send_claim',
+        'add_claims', 'change_claims', 'delete_claims', 'view_claims', 'send_claims',
         'add_creditorganizations', 'change_creditorganizations', 'delete_creditorganizations',
         'add_offers', 'change_offers', 'delete_offers', 'view_offers',
-        'add_worksheets', 'change_worksheets', 'delete_worksheets', 'view_worksheet'
+        'add_worksheets', 'change_worksheets', 'delete_worksheets', 'view_worksheets'
     ]
     partners_perms_needed = [
-        'add_claims', 'send_claim',
-        'add_worksheets', 'view_worksheet'
+        'add_claims', 'send_claims',
+        'add_worksheets', 'view_worksheets'
     ]
     creditorg_perms_needed = [
-        'view_claim',
+        'view_claims',
         'add_offers', 'change_offers', 'delete_offers', 'view_offers',
     ]
 
